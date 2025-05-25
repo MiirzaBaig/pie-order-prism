@@ -13,9 +13,13 @@ const TopBar = () => {
   ];
 
   return (
-    <div className="glass-nav p-3 sm:p-4 flex items-center justify-between sticky top-0 z-50 animate-slide-in-right">
+    <div className={`glass-nav p-3 sm:p-4 flex items-center justify-between sticky top-0 z-30 animate-slide-in-right ${
+      isMobile ? 'ml-0' : ''
+    }`}>
       <div className="flex items-center gap-2 sm:gap-4">
-        <div className="glass-card px-2 py-1 sm:px-4 sm:py-2 animate-bounce-in">
+        <div className={`glass-card px-2 py-1 sm:px-4 sm:py-2 animate-bounce-in ${
+          isMobile ? 'ml-12' : ''
+        }`}>
           <span className="text-pizza-orange font-semibold text-xs sm:text-sm">🍕 Pizza Dashboard</span>
         </div>
       </div>
