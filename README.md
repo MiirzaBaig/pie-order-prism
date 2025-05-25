@@ -1,73 +1,112 @@
-# Welcome to your Lovable project
+# Pie Order Prism 🍕📊
 
-## Project info
+[![Vercel Deploy](https://vercelbadge.vercel.app/api/MiirzaBaig/pie-order-prism)](https://pie-order-prism.vercel.app/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-**URL**: https://lovable.dev/projects/ed1e33c8-914c-40a4-97d4-58aa7df0a54f
+A beautiful, modern pizza order dashboard built with **Vite**, **React**, **TypeScript**, **Tailwind CSS**, and **Google OAuth** authentication.
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## ✨ Features
 
-**Use Lovable**
+- **Google OAuth Authentication** (secure, SPA-friendly)
+- **Protected Dashboard & Pages** (only logged-in users can access)
+- **Glassy, animated UI** (shadcn-ui, Tailwind, custom gradients)
+- **User Profile**: See your Google name, email, and avatar in a friendly card
+- **Logout & Session Management**
+- **Responsive**: Works great on desktop and mobile
+- **Easy deployment**: Ready for Vercel, Netlify, or your favorite host
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/ed1e33c8-914c-40a4-97d4-58aa7df0a54f) and start prompting.
+---
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🚀 Quick Start
 
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
+### 1. **Clone the repo**
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+git clone https://github.com/MiirzaBaig/pie-order-prism.git
+cd pie-order-prism
 ```
 
-**Edit a file directly in GitHub**
+### 2. **Install dependencies**
+```sh
+npm install
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### 3. **Set up Google OAuth**
+- Go to [Google Cloud Console](https://console.cloud.google.com/apis/credentials)
+- Create OAuth 2.0 credentials for a Web app
+- Add your dev and prod URLs to **Authorized JavaScript origins** and **redirect URIs** (e.g. `http://localhost:5173`, `https://your-vercel-url.vercel.app`)
+- Copy your **Client ID**
 
-**Use GitHub Codespaces**
+### 4. **Configure environment variables**
+Create a `.env` file:
+```
+VITE_GOOGLE_CLIENT_ID=your-google-client-id-here
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### 5. **Run the app**
+```sh
+npm run dev
+```
+Visit [http://localhost:5173](http://localhost:5173)
 
-## What technologies are used for this project?
+---
 
-This project is built with:
+## 🛡️ Deployment
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### **Deploy to Vercel**
+1. Push your code to GitHub.
+2. Go to [Vercel](https://vercel.com/import) and import your repo.
+3. Set the `VITE_GOOGLE_CLIENT_ID` environment variable in Vercel dashboard.
+4. After deploy, add your Vercel URL to Google Cloud Console as an allowed origin/redirect.
 
-## How can I deploy this project?
+---
 
-Simply open [Lovable](https://lovable.dev/projects/ed1e33c8-914c-40a4-97d4-58aa7df0a54f) and click on Share -> Publish.
+## 🧑‍💻 Tech Stack
 
-## Can I connect a custom domain to my Lovable project?
+- [Vite](https://vitejs.dev/)
+- [React](https://react.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [shadcn/ui](https://ui.shadcn.com/)
+- [@react-oauth/google](https://www.npmjs.com/package/@react-oauth/google)
+- [React Router](https://reactrouter.com/)
+- [Vercel](https://vercel.com/) (recommended deployment)
 
-Yes, you can!
+---
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## 📂 Project Structure
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+```
+src/
+  components/    # UI and layout components
+  pages/         # Route-based pages (Dashboard, Orders, Profile, Login)
+  hooks/         # Custom React hooks
+  lib/           # Utility functions
+  App.tsx        # Main app component
+  main.tsx       # Entry point
+```
+
+---
+
+## 📝 License
+
+MIT
+
+---
+
+## 🙋‍♂️ Author
+
+- [Miirza Baig](https://github.com/MiirzaBaig)
+
+---
+
+## 📣 Contributing
+
+Pull requests welcome! For major changes, please open an issue first to discuss what you would like to change.
+
+---
+
+## 💡 Inspiration
+
+Built for modern pizza shops, but easily adaptable for any dashboard or SaaS!
