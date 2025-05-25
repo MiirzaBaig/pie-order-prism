@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -70,12 +69,12 @@ const OrdersTable = () => {
   });
 
   return (
-    <div className="glass-card space-y-6 animate-fade-in-up">
-      <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
-        <h2 className="text-2xl font-bold text-white">Pizza Orders</h2>
-        <div className="flex gap-4">
+    <div className="glass-card space-y-4 sm:space-y-6 animate-fade-in-up">
+      <div className="flex flex-col space-y-4 lg:flex-row lg:space-y-0 lg:justify-between lg:items-center">
+        <h2 className="text-xl sm:text-2xl font-bold text-white">Pizza Orders</h2>
+        <div className="flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4">
           <Select value={filterStatus} onValueChange={setFilterStatus}>
-            <SelectTrigger className="w-[180px] glass focus-ring">
+            <SelectTrigger className="w-full sm:w-[180px] glass focus-ring">
               <SelectValue placeholder="Filter by status" />
             </SelectTrigger>
             <SelectContent className="glass bg-slate-900/95 border-white/20">
@@ -89,7 +88,7 @@ const OrdersTable = () => {
           </Select>
           
           <Select value={sortBy} onValueChange={setSortBy}>
-            <SelectTrigger className="w-[180px] glass focus-ring">
+            <SelectTrigger className="w-full sm:w-[180px] glass focus-ring">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
             <SelectContent className="glass bg-slate-900/95 border-white/20">
@@ -100,41 +99,77 @@ const OrdersTable = () => {
         </div>
       </div>
 
-      <div className="rounded-lg overflow-hidden glass">
-        <Table>
-          <TableHeader className="bg-white/5">
-            <TableRow className="border-white/10 hover:bg-white/5">
-              <TableHead className="text-white font-semibold">Order ID</TableHead>
-              <TableHead className="text-white font-semibold">Customer</TableHead>
-              <TableHead className="text-white font-semibold">Pizza Type</TableHead>
-              <TableHead className="text-white font-semibold">Quantity</TableHead>
-              <TableHead className="text-white font-semibold">Order Date</TableHead>
-              <TableHead className="text-white font-semibold">Status</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {sortedOrders.map((order, index) => (
-              <TableRow 
-                key={order.id} 
-                className="border-white/10 hover:bg-white/5 transition-all duration-300 hover-lift"
-                style={{ animationDelay: `${index * 50}ms` }}
-              >
-                <TableCell className="font-medium text-pizza-orange">{order.id}</TableCell>
-                <TableCell className="text-white">{order.customer}</TableCell>
-                <TableCell className="text-white">{order.pizza}</TableCell>
-                <TableCell className="text-white">{order.quantity}</TableCell>
-                <TableCell className="text-white">{order.date}</TableCell>
-                <TableCell>
-                  <Badge 
-                    className={`${getStatusColor(order.status)} animate-pulse-glow border`}
-                  >
-                    {order.status}
-                  </Badge>
-                </TableCell>
+      <div className="w-full overflow-x-auto rounded-lg glass">
+        <div className="block md:hidden space-y-4 p-4">
+          {sortedOrders.map((order, index) => (
+            <div 
+              key={order.id}
+              className="glass-card hover-lift transition-all duration-300"
+              style={{ animationDelay: `${index * 50}ms` }}
+            >
+              <div className="flex justify-between items-start mb-3">
+                <div>
+                  <div className="font-medium text-pizza-orange text-sm">{order.id}</div>
+                  <div className="text-white font-semibold">{order.customer}</div>
+                </div>
+                <Badge className={`${getStatusColor(order.status)} animate-pulse-glow border text-xs`}>
+                  {order.status}
+                </Badge>
+              </div>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-gray-400">Pizza:</span>
+                  <span className="text-white">{order.pizza}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-400">Quantity:</span>
+                  <span className="text-white">{order.quantity}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-400">Date:</span>
+                  <span className="text-white">{order.date}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="hidden md:block">
+          <Table>
+            <TableHeader className="bg-white/5 sticky top-0">
+              <TableRow className="border-white/10 hover:bg-white/5">
+                <TableHead className="text-white font-semibold text-sm lg:text-base">Order ID</TableHead>
+                <TableHead className="text-white font-semibold text-sm lg:text-base">Customer</TableHead>
+                <TableHead className="text-white font-semibold text-sm lg:text-base hidden lg:table-cell">Pizza Type</TableHead>
+                <TableHead className="text-white font-semibold text-sm lg:text-base">Qty</TableHead>
+                <TableHead className="text-white font-semibold text-sm lg:text-base hidden xl:table-cell">Order Date</TableHead>
+                <TableHead className="text-white font-semibold text-sm lg:text-base">Status</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {sortedOrders.map((order, index) => (
+                <TableRow 
+                  key={order.id} 
+                  className="border-white/10 hover:bg-white/5 transition-all duration-300 hover-lift"
+                  style={{ animationDelay: `${index * 50}ms` }}
+                >
+                  <TableCell className="font-medium text-pizza-orange text-xs sm:text-sm">{order.id}</TableCell>
+                  <TableCell className="text-white text-xs sm:text-sm">{order.customer}</TableCell>
+                  <TableCell className="text-white text-xs sm:text-sm hidden lg:table-cell">{order.pizza}</TableCell>
+                  <TableCell className="text-white text-xs sm:text-sm">{order.quantity}</TableCell>
+                  <TableCell className="text-white text-xs sm:text-sm hidden xl:table-cell">{order.date}</TableCell>
+                  <TableCell>
+                    <Badge 
+                      className={`${getStatusColor(order.status)} animate-pulse-glow border text-xs whitespace-nowrap`}
+                    >
+                      {order.status}
+                    </Badge>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       </div>
     </div>
   );

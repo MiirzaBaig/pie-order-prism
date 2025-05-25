@@ -1,9 +1,12 @@
 
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const isMobile = useIsMobile();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
   const menuItems = [
@@ -12,12 +15,74 @@ const Sidebar = () => {
     { path: '/profile', label: 'Profile', icon: '👤' },
   ];
 
+  if (isMobile) {
+    return (
+      <>
+        {/* Mobile Menu Button */}
+        <button 
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="fixed top-4 left-4 z-50 glass-button p-2 text-white hover:text-pizza-orange focus-ring"
+          aria-label="Toggle Menu"
+        >
+          {isMobileMenuOpen ? '✕' : '☰'}
+        </button>
+        
+        {/* Mobile Sidebar */}
+        <div 
+          className={`fixed inset-0 z-40 glass-nav transform transition-transform duration-300 ease-in-out ${
+            isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}
+        >
+          <div className="p-6 h-full flex flex-col">
+            <div className="flex items-center justify-between mb-8">
+              <h1 className="text-xl font-bold bg-gradient-to-r from-pizza-orange to-pizza-sauce bg-clip-text text-transparent">
+                Pizza Dashboard
+              </h1>
+              <button
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="glass-button p-2 text-white hover:text-pizza-orange focus-ring"
+                aria-label="Close Menu"
+              >
+                ✕
+              </button>
+            </div>
+            
+            <nav className="space-y-3 mt-8">
+              {menuItems.map((item) => {
+                const isActive = location.pathname === item.path;
+                return (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={`flex items-center gap-3 p-3 rounded-lg transition-all duration-300 group hover-lift focus-ring ${
+                      isActive
+                        ? 'glass pizza-gradient text-white shadow-lg'
+                        : 'hover:glass hover:bg-white/10'
+                    }`}
+                  >
+                    <span className="text-xl group-hover:scale-110 transition-transform duration-300">
+                      {item.icon}
+                    </span>
+                    <span className="font-medium group-hover:text-pizza-orange transition-colors duration-300">
+                      {item.label}
+                    </span>
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
+        </div>
+      </>
+    );
+  }
+
   return (
     <div className={`glass-nav h-screen sticky top-0 transition-all duration-300 ${isCollapsed ? 'w-16' : 'w-64'} animate-slide-in-left`}>
       <div className="p-6">
         <div className="flex items-center justify-between mb-8">
           {!isCollapsed && (
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-pizza-orange to-pizza-sauce bg-clip-text text-transparent">
+            <h1 className="text-xl font-bold bg-gradient-to-r from-pizza-orange to-pizza-sauce bg-clip-text text-transparent">
               Pizza Dashboard
             </h1>
           )}
