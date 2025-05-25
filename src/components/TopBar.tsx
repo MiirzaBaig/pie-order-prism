@@ -1,10 +1,11 @@
-
 import { useState } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useAuth } from '@/components/AuthContext';
 
 const TopBar = () => {
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const isMobile = useIsMobile();
+  const { user, logout, isLoading } = useAuth();
 
   const socialLinks = [
     { name: 'Facebook', icon: '📘', url: 'https://facebook.com' },
@@ -54,6 +55,21 @@ const TopBar = () => {
             </a>
           ))}
         </div>
+
+        {/* Authenticated user info and logout */}
+        {user && !isLoading && (
+          <div className="flex items-center gap-2 ml-4">
+            <span className="text-white/90 text-sm sm:text-base bg-white/10 px-3 py-1 rounded-full glass-card shadow">
+              Hello, <span className="font-semibold text-pizza-orange">{user.name}</span>!
+            </span>
+            <button
+              onClick={logout}
+              className="glass-button px-3 py-1 rounded-lg text-sm text-white bg-pizza-orange hover:bg-pizza-sauce transition-colors focus-ring"
+            >
+              Logout
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

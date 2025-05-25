@@ -1,15 +1,29 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useAuth } from '@/components/AuthContext';
 
 const NotFound = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, isLoading } = useAuth();
 
   useEffect(() => {
-    console.error(
-      "404 Error: User attempted to access non-existent route:",
-      location.pathname
-    );
-  }, [location.pathname]);
+    if (isLoading) return;
+    if (!user) {
+      navigate('/login');
+    }
+  }, [user, isLoading, navigate]);
+
+  useEffect(() => {
+    if (user) {
+      console.error(
+        "404 Error: User attempted to access non-existent route:",
+        location.pathname
+      );
+    }
+  }, [location.pathname, user]);
+
+  if (!user) return null;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">

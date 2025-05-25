@@ -1,14 +1,19 @@
-
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/components/AuthContext';
 
 const Index = () => {
   const navigate = useNavigate();
+  const { user, isLoading } = useAuth();
 
   useEffect(() => {
-    // Redirect to dashboard on initial load
-    navigate('/');
-  }, [navigate]);
+    if (isLoading) return;
+    if (user) {
+      navigate('/'); // dashboard
+    } else {
+      navigate('/login');
+    }
+  }, [user, isLoading, navigate]);
 
   return null;
 };

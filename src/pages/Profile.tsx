@@ -1,14 +1,38 @@
-
 import Layout from '@/components/Layout';
+import { useAuth } from '@/components/AuthContext';
 
 const Profile = () => {
-  // Mock user data - in real app this would come from authentication
-  const user = {
-    name: "Pizza Master",
-    email: "pizzamaster@example.com",
-    role: "Restaurant Manager",
-    joinDate: "January 2024"
-  };
+  const { user, isLoading, error } = useAuth();
+
+  if (isLoading) {
+    return (
+      <Layout>
+        <div className="flex justify-center items-center min-h-[60vh]">
+          <div className="glass-card p-8 text-center animate-pulse-glow">Loading your profile...</div>
+        </div>
+      </Layout>
+    );
+  }
+
+  if (error) {
+    return (
+      <Layout>
+        <div className="flex justify-center items-center min-h-[60vh]">
+          <div className="glass-card p-8 text-center text-red-400">{error}</div>
+        </div>
+      </Layout>
+    );
+  }
+
+  if (!user) {
+    return (
+      <Layout>
+        <div className="flex justify-center items-center min-h-[60vh]">
+          <div className="glass-card p-8 text-center">You are not logged in.</div>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
@@ -25,11 +49,13 @@ const Profile = () => {
         <div className="max-w-2xl mx-auto">
           <div className="glass-card space-y-6 animate-fade-in-up" style={{ animationDelay: '200ms' }}>
             <div className="text-center">
-              <div className="w-24 h-24 bg-gradient-to-r from-pizza-orange to-pizza-sauce rounded-full flex items-center justify-center text-4xl mx-auto mb-4 animate-pulse-glow">
-                👤
-              </div>
+              <img
+                src={user.picture}
+                alt={user.name}
+                className="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-pizza-orange shadow-lg animate-pulse-glow"
+              />
               <h2 className="text-2xl font-bold text-white mb-2">{user.name}</h2>
-              <p className="text-pizza-orange font-medium">{user.role}</p>
+              <p className="text-pizza-orange font-medium">Google User</p>
             </div>
 
             <div className="space-y-4">
@@ -38,18 +64,14 @@ const Profile = () => {
                 <span className="text-white">{user.email}</span>
               </div>
               <div className="flex justify-between items-center py-3 border-b border-white/10">
-                <span className="text-gray-400">Role</span>
-                <span className="text-white">{user.role}</span>
-              </div>
-              <div className="flex justify-between items-center py-3 border-b border-white/10">
-                <span className="text-gray-400">Member Since</span>
-                <span className="text-white">{user.joinDate}</span>
+                <span className="text-gray-400">ID</span>
+                <span className="text-white">{user.id}</span>
               </div>
             </div>
 
             <div className="pt-6 text-center">
               <p className="text-gray-300 mb-4">
-                🍕 Ready to implement Google OAuth? This profile will automatically display your Google account information once authentication is set up!
+                🍕 Your profile info is powered by Google OAuth. Enjoy your stay!
               </p>
             </div>
           </div>

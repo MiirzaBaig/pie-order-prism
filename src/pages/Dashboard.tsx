@@ -1,10 +1,45 @@
-
 import Layout from '@/components/Layout';
+import { useAuth } from '@/components/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import StatCard from '@/components/StatCard';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
+  const { user, isLoading, error } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLoading && !user) {
+      navigate('/login');
+    }
+  }, [user, isLoading, navigate]);
+
+  if (isLoading) {
+    return (
+      <Layout>
+        <div className="flex justify-center items-center min-h-[60vh]">
+          <div className="glass-card p-8 text-center animate-pulse-glow">Loading dashboard...</div>
+        </div>
+      </Layout>
+    );
+  }
+
+  if (error) {
+    return (
+      <Layout>
+        <div className="flex justify-center items-center min-h-[60vh]">
+          <div className="glass-card p-8 text-center text-red-400">{error}</div>
+        </div>
+      </Layout>
+    );
+  }
+
+  if (!user) {
+    return null; // Redirecting
+  }
+
   const stats = [
     { title: 'Total Orders', value: 1247, icon: '📊', color: 'bg-gradient-to-r from-pizza-orange to-pizza-sauce', delay: 100 },
     { title: 'Pending', value: 23, icon: '⏳', color: 'bg-gradient-to-r from-yellow-500 to-orange-500', delay: 200 },
@@ -15,6 +50,12 @@ const Dashboard = () => {
   return (
     <Layout>
       <div className="space-y-8">
+        <div className="max-w-xl mx-auto mt-8">
+          <div className="glass-card text-center p-8 animate-fade-in-up">
+            <h1 className="text-3xl font-bold mb-2">Hello, {user.name}! 👋</h1>
+            <p className="text-lg text-gray-300">Welcome to your dashboard.</p>
+          </div>
+        </div>
         {/* Hero Section */}
         <div className="text-center space-y-6 animate-fade-in-up">
           <div className="space-y-4">
